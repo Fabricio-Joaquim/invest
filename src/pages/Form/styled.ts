@@ -7,7 +7,7 @@ export const Wrapper = styled.form`
     display: grid; 
   grid-template-columns: 1fr 1fr; 
   grid-template-rows: 0.6fr 1fr 1fr 1fr 1fr 1fr; 
-  gap: 0px 0px; 
+  gap: 0px 20px; 
   margin-left: 50px;
   grid-template-areas: 
     "title title"
@@ -24,14 +24,11 @@ export const Title = styled.h2`
 `
 export const Yield = styled.div`
     grid-area: yield;
-    flex-direction: row;
+    flex-direction: column;
     display: flex;    
-    input{
-        display: none;
-        &:checked +label{
-            background-color: ${props => props.theme.colors.secundary};
-            color:white
-        }
+    
+    div{
+        margin-top:10px
     }
 `
 
@@ -65,26 +62,30 @@ export const IPCA = styled(MainDiv)`
     grid-area:ipca ;
 `
 
-export const Reset = styled.div`    
+
+export const Reset = styled(MainDiv)`    
     grid-area:resetf ;
 `
 
-export const Index = styled.div`    
+export const Index = styled(MainDiv)`    
     grid-area: index;
 `
 
-export const EndAP = styled.div`    
+export const EndAP = styled(MainDiv)`    
     grid-area: endAP;
 `
 
-export const Profit = styled.div`   
+export const Profit = styled(MainDiv)`   
     grid-area: profit;
 `
 
-export const CDI = styled.div`  
+export const CDI = styled(MainDiv)`  
     grid-area: cdi;
+    display:flex;
+    flex-direction:column;
 `
 
-export const Submit = styled.div`   
+export const Submit = styled(MainDiv)`   
     grid-area: submit;
 `
+

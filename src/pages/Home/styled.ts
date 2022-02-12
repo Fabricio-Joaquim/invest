@@ -6,7 +6,7 @@ export const Wrapper = styled.div`
     background-color: ${props => props.theme.colors.three};
     margin: 20px;
     border-radius: 10px;
-    grid-template-columns: 1fr 1fr; 
+    grid-template-columns: .5fr 1fr; 
   grid-template-rows: .5fr 1fr 1fr; 
   gap: 0px 0px; 
   grid-template-areas: 

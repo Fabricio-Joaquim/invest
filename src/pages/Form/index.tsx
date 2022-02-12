@@ -1,43 +1,103 @@
-import React from 'react'
+/*eslint-disable*/
+import React, { useEffect, useState, useCallback} from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import * as S from './styled'
+import Button from "../../components/Button"
+import Input from "../../components/Input"
+import Errorr from '../../components/Error'
+import Radio from "../../components/Radio"
+import request from "../../services/request"
 type Inputs = {
-    example: string,
-    exampleRequired: string,
+	cdi: string,
+	deadline: string,
+	endAP:string,
+	initialAP: string,
+	ipca:string,
+	profit: string,
 	rendimento:string
-  };
-
+};
 export const Form = () => {
-	const { register, handleSubmit, watch, formState: { errors } } = useForm<Inputs>()
-	const onSubmit: SubmitHandler<Inputs> = data => console.log(data)
-  
-	console.log(watch('rendimento')) // watch input value by passing the name of it
-  
+
+	const [Data, setData] = useState<any>([])
+		useEffect(() => {
+		call()
+		request.filter({})
+		console.log(Data)
+	}, [])
+	const { register, handleSubmit, reset, formState: { errors } } = useForm<Inputs>({defaultValues:{cdi: Data[0]}})
+	const call = useCallback(
+	  async() => {
+		   const value = (await request.indicator())
+			setData(value)
+		},
+	  [])
+
+
+	console.log(Data)
+
+	const onSubmit: SubmitHandler<Inputs> = data => console.log(data, "1")
+
 	return (
 		<S.Wrapper onSubmit={handleSubmit(onSubmit)}>
 			<S.Title>Simulador</S.Title>
 			<S.Yield>
-				<S.Field lado={'esq'} htmlFor="option3">Free</S.Field>
-				<input type="radio" id="option3" value="bruto" {...register('rendimento', { required: true })}/>
-				<S.Field htmlFor="option2">Free</S.Field>
-				<input type="radio" id='option2' value="liquido" {...register('rendimento')}/>
+				Rendimento
+				<div>
+			<Radio name='rendimento' register={register} two left value="Bruto"/>
+			<Radio name='rendimento' register={register} two right value="Liquido"/>
+				</div>
+			<Errorr error={errors.rendimento} message={errors.rendimento?.message}/>
 			</S.Yield>
-			<S.Index>index</S.Index>
-			<S.InitialAP>Aporte Inicial</S.InitialAP>
-			<S.EndAP>Aporte Mensal</S.EndAP>
-			<S.Deadline>Prazo (em meses)</S.Deadline>
-			<S.Profit>Rentabilidade</S.Profit>
-			<S.IPCA>IPCA(ao ano)</S.IPCA>
-			<S.CDI>CDI</S.CDI>
-			<S.Reset>Limpar Campos</S.Reset>
-			<S.Submit>Simular</S.Submit>
-			{/* 				
-				<input defaultValue="test" disabled {...register('example')} />        
-				<input {...register('exampleRequired', { required: true })} />
-				{errors.exampleRequired && <span>This field is required</span>}
-        
-				<input type="submit" /> */}
+			<S.Index>
+				Tipo de Index
+				<div style={{marginTop:10}}>
+				<Radio name='index' register={register} left value="PRE"/>
+				<Radio name='index' register={register}  value="POS"/>
+				<Radio name='index' register={register} right value="FIXADO"/>
+				</div>
+
+			</S.Index>
+			<S.InitialAP>
+				Aporte Inicial
+				<Input register={register} name="initialAP" />
+				<Errorr error={errors.initialAP} message={errors.initialAP?.message}/>
+				</S.InitialAP>
+			<S.EndAP>
+				Aporte Mensal
+			<Input register={register} name="endAP" />
+			<Errorr error={errors.endAP} message={errors.endAP?.message}/>
+
+			</S.EndAP>
+			<S.Deadline>
+				Prazo (em meses)
+				<Input register={register} name="deadline" />
+				<Errorr error={errors.deadline} message={errors.deadline?.message}/>
+
+				</S.Deadline>
+			<S.Profit>
+				Rentabilidade
+			<Input register={register} name="profit" />
+			<Errorr error={errors.profit} message={errors.profit?.message}/>
+			</S.Profit>
+			<S.IPCA>
+				IPCA(ao ano)
+				<Input register={register} name="ipca" disable norequire mdefault={Data[1]}/>
+				<Errorr error={errors.deadline} message={errors.ipca?.message}/>
+				</S.IPCA>
+			<S.CDI>
+				CDI
+				<Input register={register} name="cdi" disable norequire mdefault={Data[0]}/>
+				<Errorr error={errors.cdi} message={errors.cdi?.message}/>
+
+			</S.CDI>
+			<S.Reset>
+				<Button name='Limpar Campos' bg='white' onClick={()=>reset()} type="reset" />
+			</S.Reset>
+			<S.Submit>
+				<Button name='Simular' type="submit" />
+			</S.Submit>
 		</S.Wrapper>
-	)}
+	)
+}
 
 export default Form
