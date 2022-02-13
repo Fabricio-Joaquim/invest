@@ -4,19 +4,17 @@ interface IIndicator{
 	nome:string,
 	valor:number
 }
-interface IFilter {
-	tipoIndexacao?: string,
-	tipoRendimento?: string,
-}
+
 export default {
 
 	async indicator() {
-	const [cdi, ipca] =	await api.get<IIndicator[]>('indicadores').then(({ data }) => (data))
+	const [cdi, ipca] =	await api.get<IIndicator[]>('indicadores')
+	.then(({ data }) => (data))
 		return [cdi.valor.toString(), ipca.valor.toString()]
 },
 
-	async filter(data:IFilter){
-		api.get("simulacoes").then(({data})=>console.log(data))
+	async filter(indexacao:string,rendimento:string){
+		return api.get(`simulacoes/?tipoIndexacao=${indexacao}&tipoRendimento=${rendimento}`).then(({data})=>(data))
 	}
 /* {
 		"tipoIndexacao": "pre",

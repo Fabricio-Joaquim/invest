@@ -1,12 +1,11 @@
 /*eslint-disable*/
-import React, { useEffect, useState, useCallback } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import * as S from './styled'
 import Button from "../../components/Button"
 import Input from "../../components/Input"
 import Errorr from '../../components/Error'
 import Radio from "../../components/Radio"
-import request from "../../services/request"
+import {useGlobalContext} from "../../context/"
 type Inputs = {
 	cdi: string,
 	deadline: string,
@@ -18,26 +17,12 @@ type Inputs = {
 	index: string
 };
 export const Form = () => {
-
-	const [Data, setData] = useState<any>([])
-	useEffect(() => {
-		call()
-		request.filter({})
-		console.log(Data)
-	}, [])
-	const { register, handleSubmit, reset, formState: { errors } } = useForm<Inputs>({ defaultValues: { cdi: Data[0] } })
-	const call = useCallback(
-		async () => {
-			const value = (await request.indicator())
-			setData(value)
-		},
-		[])
-
-
-	console.log(Data)
-
-	const onSubmit: SubmitHandler<Inputs> = data => console.log(data, "1")
-
+	const {Data, changeGraphic, getRender} = useGlobalContext()
+	const { register, handleSubmit, reset, formState: { errors, isSubmitSuccessful } } = useForm<Inputs>({ })
+	const onSubmit: SubmitHandler<Inputs> = data => {
+		getRender(data)
+		changeGraphic();}
+	const clickReset = () => {reset(); isSubmitSuccessful&&changeGraphic()}
 	return (
 		<S.Wrapper onSubmit={handleSubmit(onSubmit)}>
 			<S.Title>Simulador</S.Title>
@@ -50,11 +35,11 @@ export const Form = () => {
 				<Errorr error={errors.rendimento} message={errors.rendimento?.message} />
 			</S.Yield>
 			<S.Index error={errors.index?.message}>
-				Tipo de Index
+				Tipo de Indexação
 				<div>
 					<Radio name='index' register={register} left value="PRE" />
 					<Radio name='index' register={register} value="POS" />
-					<Radio name='index' register={register} right value="FIXADO" />
+					<Radio name='index' register={register} right value="IPCA" />
 				</div>
 				<Errorr error={errors.index} message={errors.index?.message} />
 			</S.Index>
@@ -81,16 +66,22 @@ export const Form = () => {
 			</S.Profit>
 			<S.IPCA>
 				IPCA(ao ano)
-				<Input register={register} name="ipca" disable norequire mdefault={Data[1]} />
+				<Input
+					register={register}
+					name="ipca"
+					disable
+					norequire
+					mdefault={Data[0]}
+				/>
 				<Errorr error={errors.deadline} message={errors.ipca?.message} />
 			</S.IPCA>
 			<S.CDI>
 				CDI
-				<Input register={register} name="cdi" disable norequire mdefault={Data[0]} />
+				<Input register={register} name="cdi" disable norequire mdefault={Data[1]} />
 				<Errorr error={errors.cdi} message={errors.cdi?.message} />
 			</S.CDI>
 			<S.Reset>
-				<Button name='Limpar Campos' bg='white' onClick={() => reset()} type="reset" />
+				<Button name='Limpar Campos' bg='white' onClick={clickReset} type="reset" />
 			</S.Reset>
 			<S.Submit>
 				<Button name='Simular' type="submit" />

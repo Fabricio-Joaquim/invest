@@ -13,7 +13,6 @@ two?:boolean
 }
 
 const Radio = ({value,name,register, right, left, two}:IProps) => {
-	console.log(value)
 	return (
 		<>
 			<label>

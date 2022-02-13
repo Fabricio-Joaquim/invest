@@ -1,10 +1,14 @@
 import React from 'react'
 import * as S from './styled'
-const Card = () => {
+interface props{
+	titulo:string,
+	valor:number
+}
+const Card = ({titulo, valor}:props) => {
 	return (
 		<S.Wrapper>
-			<span>Valor final bruto</span>
-			<p>R$ 5.000,00</p>
+			<span>{titulo}</span>
+			<p>{valor}</p>
 		</S.Wrapper>
 	)
 }
