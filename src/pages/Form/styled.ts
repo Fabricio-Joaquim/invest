@@ -1,7 +1,10 @@
 import styled from 'styled-components'
 interface props {
-    lado?: string
+    lado?: string,
+    error?:string
+
 }
+
 export const Wrapper = styled.form`
     grid-area: Form;
     display: grid; 
@@ -21,15 +24,6 @@ export const Wrapper = styled.form`
 export const Title = styled.h2`
     font-size: ${props => props.theme.fontSize.medium};
     grid-area: title;
-`
-export const Yield = styled.div`
-    grid-area: yield;
-    flex-direction: column;
-    display: flex;    
-    
-    div{
-        margin-top:10px
-    }
 `
 
 export const Field = styled.label<props>`
@@ -52,40 +46,66 @@ const MainDiv = styled.section`
     display: flex;
     flex-direction:column;
 `
-export const InitialAP = styled(MainDiv)`
-    grid-area: initialAP;
+
+export const Yield = styled.div<props>`
+    grid-area: yield;
+    flex-direction: column;
+    display: flex;    
+    color:${props => !props.error?'black':'red'};
+
+    div{
+        margin-top:10px
+    }
 `
-export const Deadline = styled(MainDiv)`
+
+export const InitialAP = styled(MainDiv)<props>`
+    grid-area: initialAP;
+    color:${props => !props.error?'black':'red'};
+
+`
+export const Deadline = styled(MainDiv)<props>`
     grid-area: deadline;
+    color:${props => !props.error?'black':'red'};
+
 `
 export const IPCA = styled(MainDiv)`   
     grid-area:ipca ;
-`
 
+`
 
 export const Reset = styled(MainDiv)`    
-    grid-area:resetf ;
+    grid-area:resetf;
+
 `
 
-export const Index = styled(MainDiv)`    
+export const Index = styled(MainDiv)<props>`    
     grid-area: index;
+    color:${props => !props.error?'black':'red'};
+    div{
+        margin-top:10px
+    }
 `
 
-export const EndAP = styled(MainDiv)`    
+export const EndAP = styled(MainDiv)<props>`    
     grid-area: endAP;
+    color:${props => !props.error?'black':'red'};
 `
 
-export const Profit = styled(MainDiv)`   
+export const Profit = styled(MainDiv)<props>`   
     grid-area: profit;
+    color:${props => !props.error?'black':'red'};
+
 `
 
 export const CDI = styled(MainDiv)`  
     grid-area: cdi;
     display:flex;
     flex-direction:column;
+
 `
 
 export const Submit = styled(MainDiv)`   
     grid-area: submit;
+    
 `
 

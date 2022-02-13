@@ -13,7 +13,6 @@ interface props{
 
 export const Input = ({register, name, disable, norequire, mdefault}:props) => {
 	const regex = /^[0-9]*$/
-
 	return <>
 		<MInput
 		defaultValue={mdefault}
