@@ -1,6 +1,8 @@
 import styled from 'styled-components'
-
-export const Wrapper = styled.section`
+interface props{
+    green?:boolean
+}
+export const Wrapper = styled.section<props>`
     display: flex;
     background-color: #F4F4F4;
     height: 100px;
@@ -13,6 +15,9 @@ export const Wrapper = styled.section`
 
     span{
         font-weight: 900;
+    }
+    p{
+        color:${props => props.green?'#2F991E':'black'};
     }
 
 `

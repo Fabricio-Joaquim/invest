@@ -4,7 +4,9 @@ export type IContext = {
     Render?:boolean,
     Graphics:IGraphic[],
     changeGraphic?: any,
-    getRender?: any
+    getRender?: any,
+    NoAporte:number[],
+	Aporte:number[]
 }
 
 export interface IGraphic {
@@ -24,11 +26,6 @@ interface IdescriptionGraphic{
     comAporte: number [],
     semAporte:number [],
 }
-
-enum aporte{
-    Z
-}
-
 
 export interface IBase {
     cdi: string,

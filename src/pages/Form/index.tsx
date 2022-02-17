@@ -2,7 +2,7 @@
 import { useForm, SubmitHandler } from 'react-hook-form'
 import * as S from './styled'
 import Button from "../../components/Button"
-import Input from "../../components/Input"
+import {Input, PercentInput} from "../../components/Input"
 import Errorr from '../../components/Error'
 import Radio from "../../components/Radio"
 import {useGlobalContext} from "../../context/"
@@ -17,6 +17,8 @@ type Inputs = {
 	index: string
 };
 export const Form = () => {
+
+	
 	const {Data, changeGraphic, getRender} = useGlobalContext()
 	const { register, handleSubmit, reset, formState: { errors, isSubmitSuccessful } } = useForm<Inputs>({ })
 	const onSubmit: SubmitHandler<Inputs> = data => {
@@ -61,23 +63,23 @@ export const Form = () => {
 			</S.Deadline>
 			<S.Profit error={errors.profit?.message}>
 				Rentabilidade
-				<Input register={register} name="profit" />
+				<PercentInput register={register} mdefault={0} name="profit" />
 				<Errorr error={errors.profit} message={errors.profit?.message} />
 			</S.Profit>
 			<S.IPCA>
 				IPCA(ao ano)
-				<Input
+				<PercentInput
 					register={register}
 					name="ipca"
 					disable
 					norequire
-					mdefault={Data[0]}
+					mdefault={parseFloat(Data[0])}
 				/>
 				<Errorr error={errors.deadline} message={errors.ipca?.message} />
 			</S.IPCA>
 			<S.CDI>
 				CDI
-				<Input register={register} name="cdi" disable norequire mdefault={Data[1]} />
+				<PercentInput register={register} name="cdi" disable norequire mdefault={parseFloat(Data[1])} />
 				<Errorr error={errors.cdi} message={errors.cdi?.message} />
 			</S.CDI>
 			<S.Reset>

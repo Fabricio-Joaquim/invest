@@ -1,5 +1,3 @@
-/*eslint-disable*/
-
 import React from 'react'
 import {
 	Chart as ChartJS,
@@ -11,11 +9,10 @@ import {
 	Legend,
 } from 'chart.js'
 import { Bar } from 'react-chartjs-2'
-import style from "../../style/theme"
-import {useGlobalContext} from "../../context"
+import style from '../../style/theme'
+import {useGlobalContext} from '../../context'
 
  
-console.log(window.screen)
 export default function App() {
 	ChartJS.register(
 		CategoryScale,
@@ -25,14 +22,14 @@ export default function App() {
 		Tooltip,
 		Legend
 	)
-	const {Graphics} = useGlobalContext()
-	const labels = [1,'122','122','122','122' ,'February', 'March', 'April', 'May', 'June', 'July']
+	const {	NoAporte, Aporte } = useGlobalContext()
+	const labels = NoAporte.map((_,index)=>index+1)
 
 	const options = {
 		plugins: {
 			title: {
 				display: true,
-				text: 'Projecao de valores',
+				text: 'Projeção de valores',
 			},
 		},
 		responsive: true,
@@ -45,26 +42,21 @@ export default function App() {
 			},
 		},
 	}
-
 	const data = {
 		labels,
 		datasets: [
 			{
-				label: 'Dataset 1',
-				data: labels.map(() => [0,100]),
+				label: 'Sem aporte',
+				data: NoAporte.map((item) => [item]),
 				backgroundColor: style.colors.primary,
-		},{
-			data: labels.map(() => [0,5]),
-		},
-	
+			},	
 			{
-				label: 'Dataset 3',
-				data: labels.map(() => [0,100]),
+				label: 'Com aporte',
+				data: Aporte.map((item) => [item]),
 				backgroundColor: style.colors.secundary,
 			},
 		],
 	}
-console.log(Graphics,2221)
 
 	return <Bar options={options} height={(window.screen.height/10)} data={data} />
 }
