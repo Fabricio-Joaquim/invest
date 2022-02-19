@@ -1,55 +1,80 @@
-/*eslint-disable*/
 import React from 'react'
-import {  RegisterOptions } from 'react-hook-form'
-import {MInput} from './styled'
+import { Percent, NInput} from './styled'
 
 interface props{
 	register: any,
 	name:string,
 	disable?: boolean,
 	norequire?:boolean,
-	mdefault?:string
+	mdefault?:string,
+	number?:boolean,
    }interface props2{
 	register: any,
 	name:string,
 	disable?: boolean,
 	norequire?:boolean,
 	mdefault:number
+	watch?:any
    }
 
-export const Input = ({register, name, norequire}:props) => {
-
+export const Input = ({register, name}:props) => {
+	const verify = { locale: 'pt-BR', currency: 'BRL' }
 	const regex = /^[0-9]*$/
-	return <>
-		<MInput
+	return <NInput
+		intlConfig={verify}
+		form={name}
 		{...register(name, {
-			required: norequire?false:'Campo obrigatório',
-			validate: 
-				{
-					positive: (value:any) => regex.test(value) || norequire || 'Campo deve ser um número',
-				} 
+			required:	'Campo obrigatório',
+			validate:
+			{
+				positive: (value:any) => regex.test(value) || 'Campo deve ser um número',
+			} 
 		})} 
-		/>
-	</>
+	/>
 }
 
-export const PercentInput = ({register, name, disable, norequire, mdefault}:props2) => {
+export const Numbers = ({register, name}:any) => {
 
-	const regex = /^[0-9]*$/
-	const value = mdefault.toString()+"%"
-	return <>
-		<MInput
-		/* defaultValue= {mdefault} */
+	return (<>
+		<NInput
+			form={name}
+			type="text"
+			maxLength={3}
+			{...register(name, {
+				required:'Campo obrigatório',
+
+			})} 
+		/>
+	</>)
+}
+
+export const Static = ({register, name, disable, norequire, mdefault}:props2) => {
+
+	const value = mdefault.toString()+'%'
+	return (<>
+		<NInput
+			form={name}
 			disabled={disable}
 			value={value}
-		{...register(name, {
-			required: norequire?false:'Campo obrigatório',
-			onChange: (e:any) => console.log(e) 		
-/* 			validate: 
-				{
-					positive: (value:any) => regex.test(value) || norequire || 'Campo deve ser um número',
-				}  */
-		})} 
+			type="text"
+			{...register(name, {
+				required: norequire?false:'Campo obrigatório',
+
+			})} 
 		/>
-	</>
+	</>)
+}
+
+export const PercentInput = ({register, name}:props2) => {
+	return (<>
+		<Percent
+			form={name}
+			type="text"
+			maxLength={3}
+			suffix="%"
+			{...register(name, {
+				required:'Campo obrigatório',
+			})} 
+		/>
+	</>)
 }

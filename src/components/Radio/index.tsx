@@ -1,6 +1,3 @@
-/*eslint-disable*/
-
-import { getValue } from '@testing-library/user-event/dist/utils'
 import React from 'react'
 import * as S from './styled'
 type IProps = {

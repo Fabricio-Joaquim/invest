@@ -1,6 +1,4 @@
-/*eslint-disable*/
-
-import React, { createContext, useContext, useState, useEffect, useCallback, SetStateAction } from 'react'
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react'
 import request from '../services/request'
 import { IContext, IGraphic, IBase } from './types'
 
@@ -8,11 +6,12 @@ export const Context = createContext<IContext>({ Data: [], Graphics: [],NoAporte
 
 export const ContextProvider = (props: any) => {
 	const [Render, setRender] = useState(false)
-	const changeGraphic = () => setRender(!Render)
 	const [Data, setData] = useState<string[]>([])
 	const [Graphics, setGraphics] = useState<IGraphic[]>([])
 	const [Aporte, setAporte] = useState([])
 	const [NoAporte, setNoAporte] = useState([])
+
+	const changeGraphic = () => setRender(!Render)
 
 	const call = useCallback(
 		async () => {
@@ -34,11 +33,11 @@ export const ContextProvider = (props: any) => {
 	}
 
 	function getListGraphic(myObject:any, set:any){
-		let aux: number[]= []
-		for(var i in myObject){
+		const aux: number[]= []
+		for(const i in myObject){
 			aux.push(myObject[i])
 		}
-		set(aux);
+		set(aux)
 	}
 
 	return (

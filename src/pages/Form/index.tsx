@@ -1,11 +1,11 @@
-/*eslint-disable*/
+import React, { useEffect } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import * as S from './styled'
-import Button from "../../components/Button"
-import {Input, PercentInput} from "../../components/Input"
+import Button from '../../components/Button'
+import {Input, PercentInput, Static} from '../../components/Input'
 import Errorr from '../../components/Error'
-import Radio from "../../components/Radio"
-import {useGlobalContext} from "../../context/"
+import Radio from '../../components/Radio'
+import {useGlobalContext} from '../../context/'
 type Inputs = {
 	cdi: string,
 	deadline: string,
@@ -18,13 +18,19 @@ type Inputs = {
 };
 export const Form = () => {
 
-	
-	const {Data, changeGraphic, getRender} = useGlobalContext()
-	const { register, handleSubmit, reset, formState: { errors, isSubmitSuccessful } } = useForm<Inputs>({ })
+	const {Data, changeGraphic, getRender, Render} = useGlobalContext()
+	const aux = {profit:'', initialAP:'', endAP:'', deadline:''}	
+	const { register, handleSubmit, watch,resetField, reset, formState: { errors, isSubmitSuccessful } } = useForm<Inputs>({ })
 	const onSubmit: SubmitHandler<Inputs> = data => {
 		getRender(data)
-		changeGraphic();}
-	const clickReset = () => {reset(); isSubmitSuccessful&&changeGraphic()}
+		!Render&&
+		changeGraphic()
+	}
+	const clickReset = () => {reset(aux);resetField('endAP');resetField('initialAP'); isSubmitSuccessful&&changeGraphic()}
+	useEffect(()=>{
+		Render?(isSubmitSuccessful):null
+	},[])
+	
 	return (
 		<S.Wrapper onSubmit={handleSubmit(onSubmit)}>
 			<S.Title>Simulador</S.Title>
@@ -47,7 +53,7 @@ export const Form = () => {
 			</S.Index>
 			<S.InitialAP error={errors.initialAP?.message}>
 				Aporte Inicial
-				<Input register={register} name="initialAP" />
+				<Input register={register}  name="initialAP" />
 				<Errorr error={errors.initialAP} message={errors.initialAP?.message} />
 			</S.InitialAP>
 			<S.EndAP error={errors.endAP?.message}>
@@ -63,12 +69,12 @@ export const Form = () => {
 			</S.Deadline>
 			<S.Profit error={errors.profit?.message}>
 				Rentabilidade
-				<PercentInput register={register} mdefault={0} name="profit" />
+				<PercentInput register={register} watch={watch} mdefault={0} name="profit" />
 				<Errorr error={errors.profit} message={errors.profit?.message} />
 			</S.Profit>
 			<S.IPCA>
 				IPCA(ao ano)
-				<PercentInput
+				<Static
 					register={register}
 					name="ipca"
 					disable
@@ -79,7 +85,7 @@ export const Form = () => {
 			</S.IPCA>
 			<S.CDI>
 				CDI
-				<PercentInput register={register} name="cdi" disable norequire mdefault={parseFloat(Data[1])} />
+				<Static register={register} name="cdi" disable norequire mdefault={parseFloat(Data[1])} />
 				<Errorr error={errors.cdi} message={errors.cdi?.message} />
 			</S.CDI>
 			<S.Reset>
@@ -89,6 +95,7 @@ export const Form = () => {
 				<Button name='Simular' type="submit" />
 			</S.Submit>
 		</S.Wrapper>
+	
 	)
 }
 

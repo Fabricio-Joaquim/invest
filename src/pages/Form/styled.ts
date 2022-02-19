@@ -10,7 +10,7 @@ export const Wrapper = styled.form`
     display: grid; 
   grid-template-columns: 1fr 1fr; 
   grid-template-rows: 0.6fr 1fr 1fr 1fr 1fr 1fr; 
-  gap: 0px 20px; 
+  gap: 0px 7%; 
   margin-left: 50px;
   grid-template-areas: 
     "title title"
@@ -19,11 +19,18 @@ export const Wrapper = styled.form`
     "deadline profit"
     "ipca cdi"
     "resetf submit"; 
+
+    @media (max-width:800px) {
+        display: flex;
+        flex-direction: column;
+        margin-right: 50px;
+    }
     `
 
 export const Title = styled.h2`
     font-size: ${props => props.theme.fontSize.medium};
     grid-area: title;
+
 `
 
 export const Field = styled.label<props>`
@@ -41,6 +48,10 @@ export const Field = styled.label<props>`
         box-sizing: border-box;
         border: 2px solid black;
         border-radius: ${props => props.lado === 'esq' ? '10px 0 0 10px' : '0 10px 10px 0'};
+
+        @media (max-width:800px) {
+        margin:120px
+    }
 `
 const MainDiv = styled.section`
     display: flex;
@@ -73,11 +84,6 @@ export const IPCA = styled(MainDiv)`
 
 `
 
-export const Reset = styled(MainDiv)`    
-    grid-area:resetf;
-
-`
-
 export const Index = styled(MainDiv)<props>`    
     grid-area: index;
     color:${props => !props.error?'black':'red'};
@@ -103,9 +109,21 @@ export const CDI = styled(MainDiv)`
     flex-direction:column;
 
 `
-
+export const Reset = styled(MainDiv)`    
+    grid-area:resetf;
+    @media (max-width:800px) {
+        margin-top:20px;
+        align-items: center;
+    }
+`
 export const Submit = styled(MainDiv)`   
     grid-area: submit;
     
+    @media (max-width:800px) {
+        margin:20px 0;
+        align-items: center;
+        
+    }
+
 `
 

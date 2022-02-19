@@ -47,7 +47,7 @@ export default function App() {
 		datasets: [
 			{
 				label: 'Sem aporte',
-				data: NoAporte.map((item) => [item]),
+				data: NoAporte.map((item) => [0,item]),
 				backgroundColor: style.colors.primary,
 			},	
 			{
@@ -58,5 +58,5 @@ export default function App() {
 		],
 	}
 
-	return <Bar options={options} height={(window.screen.height/10)} data={data} />
+	return <Bar options={options} height={'100%'}  data={data} />
 }

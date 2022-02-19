@@ -1,4 +1,3 @@
-/*eslint-disable*/
 import styled from 'styled-components'
 
 export const Label = styled.label`
@@ -11,9 +10,9 @@ interface ISpan{
 
 export const Span = styled.span<ISpan>`
   display: inline-block;
-  padding-top: ${props =>props.two?"20px":"20px"};
-  padding-bottom: ${props =>props.two?"20px":"20px"};
-  width: ${props =>props.two?"50%":"33%"};
+  padding-top: ${props =>props.two?'20px':'20px'};
+  padding-bottom: ${props =>props.two?'20px':'20px'};
+  width: ${props =>props.two?'50%':'33%'};
   text-align: center;
   text-transform: capitalize;
   border: 2px solid black;

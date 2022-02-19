@@ -5,9 +5,11 @@ import * as S from './styled'
 export const Home = () => {
 	return(
 		<S.Wrapper>
-			<S.header>Simulador de Investimentos</S.header>
-			<Form/>
-			<Graphic/>
+			<S.Subcontainer>
+				<S.Header>Simulador de Investimentos</S.Header>
+				<Form/>
+				<Graphic/>
+			</S.Subcontainer>
 		</S.Wrapper>
 	)
 }

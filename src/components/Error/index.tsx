@@ -1,7 +1,5 @@
-/*eslint-disable*/
+import {Main} from './styled'
 import React from 'react'
-import { FieldError } from 'react-hook-form'
-
 interface props{
 error: any
 message:any
@@ -10,7 +8,7 @@ message:any
 const Errorr = ({error, message}:props) => {
 	return (
 		<>
-				{ error&&<span style={{color:"red"}}>{message}</span>}
+			{ error&&<Main>{message}</Main>}
 		</>
 	)}
 export default Errorr

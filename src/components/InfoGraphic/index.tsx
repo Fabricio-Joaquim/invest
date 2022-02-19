@@ -1,4 +1,3 @@
-/*eslint-disable*/
 import React from 'react'
 import * as S from './styled'
 import Card from '../Card'

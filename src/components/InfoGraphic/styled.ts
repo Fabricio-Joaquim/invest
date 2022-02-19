@@ -2,11 +2,17 @@ import styled from 'styled-components'
 
 
 export const wrapper = styled.aside`
-grid-area: description;
+grid-area: Description;
     
     h3{
         font-size: ${props => props.theme.fontSize.medium};
         font-weight: bold;
+ 
+        @media (max-width:800px) {
+            margin-top:50px;
+            justify-content: center;
+            display:flex
+        }
     }
 `
 
